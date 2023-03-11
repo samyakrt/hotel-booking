@@ -5,15 +5,23 @@
     },
     "extends": [
         "eslint:recommended",
+        "plugin:react/recommended",
         "plugin:@typescript-eslint/recommended"
     ],
+    "settings": {
+        "react": {
+            "version":"detect",
+            "fragment":"Fragment"
+        }
+    },
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
         "ecmaVersion": "latest",
         "sourceType": "module"
     },
     "plugins": [
-        "@typescript-eslint"
+        "@typescript-eslint",
+        "react"
     ],
     "rules": {
         "quotes":["error","single"],
@@ -21,6 +29,10 @@
         "no-unreachable":"warn",
         "no-extra-semi":"error",
         "no-return-await":"warn",
-        "semi":"error"
+        "semi":"error",
+        "no-multiple-empty-lines": ["error", {
+            "max":1
+        }],
+        "no-trailing-spaces": ["error"],
     }
 }
