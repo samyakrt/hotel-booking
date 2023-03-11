@@ -26,7 +26,7 @@ const watch = Boolean(args.watch);
             sourcemap: !isProd,
             bundle: true,
             watch,
-            
+
         }).catch(err => {
             console.error(err);
             process.exit(1);

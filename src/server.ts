@@ -1,17 +1,20 @@
-import express from 'express';
+import express, { Request } from 'express';
 import cors from 'cors';
 import path from 'path';
 import hbs from 'hbs';
-// import 'express-async-errors';
+import 'express-async-errors';
 
 import AppRouter from '@/routes/app';
 import cookieSession from 'cookie-session';
 import env from '@/shared/env';
 import mongoose from 'mongoose';
-import handleError from './middlewares/handle-error';
+import handleError from '@/middlewares/handle-error';
+import DbUsersRepo from '@/infra/repos/db-users-repo';
+import { User } from '@/models';
+
 const main = async () => {
     const app = express();
-    
+
     app.use(cors());
     app.use(express.urlencoded({ extended: true }));
     app.use(express.json());
@@ -30,8 +33,18 @@ const main = async () => {
         secret: env.SESSION_KEY,
     }));
 
-    await  mongoose.connect(env.DATABASE_URL).catch(err => console.error(err));
+    await  mongoose.connect(env.DATABASE_URL).then(() => {
+        console.log('db connected');
+    }).catch(err => console.error(err));
 
+    app.use((req: Request,_,next) => {
+        req.env = {
+            usersRepo: new DbUsersRepo(User)
+        };
+        next();
+    });
+
+    app.get('/',(req,res) => res.redirect('/app'))
     app.use('/app',AppRouter);
 
     app.use(handleError);
