@@ -1,4 +1,5 @@
 import UsersRepo from '@/srv/repos/users-repo';
+import RoomsRepo from '@/srv/repos/rooms-repo';
 
 declare module 'express-serve-static-core' {
     export interface Request {
@@ -6,7 +7,8 @@ declare module 'express-serve-static-core' {
             token?: string
         },
         env: {
-          usersRepo: UsersRepo
+          usersRepo: UsersRepo,
+          roomsRepo: RoomsRepo
         }
     }
 }

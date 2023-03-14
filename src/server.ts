@@ -10,7 +10,9 @@ import env from '@/shared/env';
 import mongoose from 'mongoose';
 import handleError from '@/middlewares/handle-error';
 import DbUsersRepo from '@/infra/repos/db-users-repo';
-import { User } from '@/models';
+import { Room, User } from '@/models';
+import DbRoomsRepo from './infra/repos/db-rooms-repo';
+import ApiRouter from '@/routes/api';
 
 const main = async () => {
     const app = express();
@@ -39,13 +41,15 @@ const main = async () => {
 
     app.use((req: Request,_,next) => {
         req.env = {
-            usersRepo: new DbUsersRepo(User)
+            usersRepo: new DbUsersRepo(User),
+            roomsRepo: new DbRoomsRepo(Room)
         };
         next();
     });
 
-    app.get('/',(req,res) => res.redirect('/app'))
+    app.get('/',(req,res) => res.redirect('/app'));
     app.use('/app',AppRouter);
+    app.use('/api',ApiRouter);
 
     app.use(handleError);
     return app;
