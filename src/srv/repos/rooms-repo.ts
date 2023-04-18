@@ -1,5 +1,5 @@
-import { Room } from '@/models/Room';
-import { Pagination, PaginationFilter } from '@/types/pagination';
+import type { Room } from '@/models/Room';
+import type { Pagination, PaginationFilter } from '@/types/pagination';
 
 interface RoomsRepo {
     fetchRooms(filter: RoomFilter): Promise<Pagination<Room>>

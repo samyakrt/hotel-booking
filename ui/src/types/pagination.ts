@@ -1,5 +1,5 @@
 export interface PaginationFilter {
-    skip?: number;
+    skip?: number
     limit?: number
 }
 
@@ -11,4 +11,3 @@ export interface Pagination<T> {
         limit: number
     }
 }
-

@@ -1,4 +1,5 @@
-import express, { Request } from 'express';
+import type { Request } from 'express';
+import express from 'express';
 import cors from 'cors';
 import path from 'path';
 import hbs from 'hbs';
@@ -35,7 +36,7 @@ const main = async () => {
         secret: env.SESSION_KEY,
     }));
 
-    await  mongoose.connect(env.DATABASE_URL).then(() => {
+  mongoose.connect(env.DATABASE_URL).then(() => {
         console.log('db connected');
     }).catch(err => console.error(err));
 
@@ -52,6 +53,13 @@ const main = async () => {
     app.use('/api',ApiRouter);
 
     app.use(handleError);
+
+    app.use((req,res) =>res.render('statuspage',{
+            script: 'StatusPage',
+            statusType: 'notfound',
+            isLoggedIn: Boolean(req.session?.token)
+        })
+    );
     return app;
 };
 

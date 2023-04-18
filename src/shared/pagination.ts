@@ -1,4 +1,4 @@
-import {Pagination} from '@/types/pagination';
+import type {Pagination} from '@/types/pagination';
 
 export const paginateResponse = <T>(rows: T[], skip: number, limit: number, total: number): Pagination<T> => ({
     data: rows,
@@ -7,5 +7,4 @@ export const paginateResponse = <T>(rows: T[], skip: number, limit: number, tota
         skip,
         limit
     }
-
 });

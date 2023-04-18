@@ -1,8 +1,9 @@
-import { Room } from '@/models/Room';
+import type { Room } from '@/models/Room';
 import { paginateResponse } from '@/shared/pagination';
-import RoomsRepo, { RoomFilter } from '@/srv/repos/rooms-repo';
-import { Pagination } from '@/types/pagination';
-import { Model } from 'mongoose';
+import type { RoomFilter } from '@/srv/repos/rooms-repo';
+import type RoomsRepo from '@/srv/repos/rooms-repo';
+import type { Pagination } from '@/types/pagination';
+import type { Model } from 'mongoose';
 class DbRoomsRepo implements RoomsRepo {
     constructor(private room: Model<Room>) { }
 

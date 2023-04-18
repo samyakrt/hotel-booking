@@ -1,4 +1,5 @@
-import { model, Schema, SchemaTypes, InferSchemaType } from 'mongoose';
+import type { InferSchemaType } from 'mongoose';
+import { model, Schema, SchemaTypes } from 'mongoose';
 
 const CurrentBookingSchema = new Schema({
     from: { type: Date, required: true },
@@ -25,6 +26,7 @@ const RoomSchema = new Schema({
     },
     imageUrls: {
         type: SchemaTypes.Array,
+        default: []
     },
     currentBookings: {
         type: [CurrentBookingSchema],

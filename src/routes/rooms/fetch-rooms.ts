@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import type { Request, Response } from 'express';
 
 const fetchRooms = async (req: Request, res: Response) => {
     const rm = req.env.roomsRepo;

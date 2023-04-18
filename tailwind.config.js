@@ -4,9 +4,12 @@ module.exports = {
   content: [
     './src/views/**/*.{html,hbs}',
     './ui/**/*.{ts,tsx,svg}',
+    './ui/node_modules/react-tailwindcss-datepicker/dist/index.esm.js'
   ],
   theme: {
     extend: {},
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/forms'),
+  ],
 };
