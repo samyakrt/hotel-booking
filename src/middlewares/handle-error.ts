@@ -1,6 +1,6 @@
 import { CustomError, ValidationFailedError } from '@/shared/error';
-import { ExtractedErrorsType } from '@/types/validation';
-import { ErrorRequestHandler, NextFunction, Request, Response } from 'express';
+import type { ExtractedErrorsType } from '@/types/validation';
+import type { ErrorRequestHandler, NextFunction, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 
 interface JsonResponse {
@@ -29,7 +29,7 @@ const handleError: ErrorRequestHandler = (err, req: Request, res: Response, next
         break;
     }
     res.render('statuspage', {
-      script: 'statuspage',
+      script: 'StatusPage',
       statusType: status === StatusCodes.FORBIDDEN ? 'forbidden' : 'error',
       isLoggedIn: Boolean(req.session?.token),
     });

@@ -1,4 +1,5 @@
-import express, { Request } from 'express';
+import type { Request } from 'express';
+import express from 'express';
 import cors from 'cors';
 import path from 'path';
 import hbs from 'hbs';
@@ -10,7 +11,9 @@ import env from '@/shared/env';
 import mongoose from 'mongoose';
 import handleError from '@/middlewares/handle-error';
 import DbUsersRepo from '@/infra/repos/db-users-repo';
-import { User } from '@/models';
+import { Room, User } from '@/models';
+import DbRoomsRepo from './infra/repos/db-rooms-repo';
+import ApiRouter from '@/routes/api';
 
 const main = async () => {
     const app = express();
@@ -33,21 +36,30 @@ const main = async () => {
         secret: env.SESSION_KEY,
     }));
 
-    await  mongoose.connect(env.DATABASE_URL).then(() => {
+  mongoose.connect(env.DATABASE_URL).then(() => {
         console.log('db connected');
     }).catch(err => console.error(err));
 
     app.use((req: Request,_,next) => {
         req.env = {
-            usersRepo: new DbUsersRepo(User)
+            usersRepo: new DbUsersRepo(User),
+            roomsRepo: new DbRoomsRepo(Room)
         };
         next();
     });
 
-    app.get('/',(req,res) => res.redirect('/app'))
+    app.get('/',(req,res) => res.redirect('/app'));
     app.use('/app',AppRouter);
+    app.use('/api',ApiRouter);
 
     app.use(handleError);
+
+    app.use((req,res) =>res.render('statuspage',{
+            script: 'StatusPage',
+            statusType: 'notfound',
+            isLoggedIn: Boolean(req.session?.token)
+        })
+    );
     return app;
 };
 
