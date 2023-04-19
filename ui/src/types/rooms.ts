@@ -16,3 +16,13 @@ export interface Room {
     description: string;
     phone: string
 }
+
+export interface BookingCard {
+    title: string
+    contents: Content[]
+}
+
+export interface Content {
+    label: string
+    body: string | number | undefined
+}

@@ -1,7 +1,8 @@
-import { Request, Response, Router } from 'express';
+import type { Request, Response} from 'express';
+import { Router } from 'express';
 const router = Router();
 
-router.get('/',(req: Request, res: Response) => {
+router.get(['/','/rooms/:roomId'],(req: Request, res: Response) => {
     res.render('index', {
         script: 'main'
     });

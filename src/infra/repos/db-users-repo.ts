@@ -1,5 +1,6 @@
-import UsersRepo, { User, UserFilter } from '@/srv/repos/users-repo';
-import { Model } from 'mongoose';
+import type { User, UserFilter } from '@/srv/repos/users-repo';
+import type UsersRepo from '@/srv/repos/users-repo';
+import type { Model } from 'mongoose';
 
 class DbUsersRepo implements UsersRepo {
 

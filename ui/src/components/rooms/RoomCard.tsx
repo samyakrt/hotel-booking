@@ -7,7 +7,7 @@ interface Props {
     room: Room,
 }
 
-const Card: React.FC<Props> = ({ room }) => (
+const RoomCard: React.FC<Props> = ({ room }) => (
     <div className="m-5 p-10 rounded border shadow-md flex justify-between max-w-3xl gap-5">
         <div>
             <img src={room.imageUrls[0]} />
@@ -29,4 +29,4 @@ const Card: React.FC<Props> = ({ room }) => (
     </div>
 );
 
-export default Card;
+export default RoomCard;

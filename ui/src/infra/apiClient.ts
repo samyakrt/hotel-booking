@@ -5,4 +5,4 @@ const BASE_URL = '/api';
 
 export const fetchRooms = (filter: RoomFilter) => request<Pagination<Room>>('GET',`${BASE_URL}/rooms`,filter);
 
-export const fetchRoom = (roomId: string) => request<Room>('GET',`${BASE_URL}/rooms/${roomId}`);
+export const fetchRoomDetail = (roomId: string) => request<Room>('GET',`${BASE_URL}/rooms/${roomId}`);
