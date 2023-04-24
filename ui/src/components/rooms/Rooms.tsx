@@ -6,7 +6,7 @@ interface Props {
     rooms: Room[]
 }
 
-const RoomList: React.FC<Props> = ({ rooms }) => (
+const Rooms: React.FC<Props> = ({ rooms }) => (
         <>
 
             <div className="flex flex-col gap-y-5">
@@ -15,4 +15,4 @@ const RoomList: React.FC<Props> = ({ rooms }) => (
         </>
     );
 
-export default RoomList;
+export default Rooms;

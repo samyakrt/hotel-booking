@@ -1,8 +1,7 @@
 import React from 'react';
 import { Layout } from '@/layouts';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { Room } from './pages';
-import RoomDetail from './pages/RoomDetail';
+import { Room, RoomDetail } from './components/rooms';
 
 const App: React.FC = () => (
         <Layout>

@@ -1,2 +1,2 @@
-export { default as SearchBar } from './SearchBar';
-export { default as Rooms } from './RoomList';
+export { default as Room } from './Room';
+export { default as RoomDetail } from './RoomDetail';

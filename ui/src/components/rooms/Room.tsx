@@ -1,9 +1,10 @@
-import { Rooms, SearchBar } from '@/components/rooms';
 import { fetchRooms } from '@/infra';
 import { Room} from '@/types';
 import type { Pagination, RoomFilter } from '@/types';
 import React, { useEffect, useState } from 'react';
 import {  FormProvider, useForm } from 'react-hook-form';
+import SearchBar from './SearchBar';
+import Rooms from './Rooms';
 
 const Room = () => {
 
