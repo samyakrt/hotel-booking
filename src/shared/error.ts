@@ -1,4 +1,4 @@
-import { ExtractedErrorsType } from '@/types/validation';
+import type { ExtractedErrorsType } from '@/types/validation';
 import HttpStatusCode from 'http-status-codes';
 
 export abstract class CustomError extends Error {

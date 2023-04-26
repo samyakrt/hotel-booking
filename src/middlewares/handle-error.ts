@@ -43,9 +43,6 @@ const handleError: ErrorRequestHandler = (err, req: Request, res: Response, next
   }
 
   res.status(status).json(payload);
-  res.status(500).json({
-    message: 'server error'
-  });
 };
 
 export default handleError;

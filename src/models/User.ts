@@ -1,7 +1,11 @@
-import { Schema, model, InferSchemaType } from 'mongoose';
-import { User } from '@/srv/repos/users-repo';
+import type { InferSchemaType} from 'mongoose';
+import mongoose from 'mongoose';
+import { Schema, model } from 'mongoose';
 
-const UserSchema = new Schema<User>({
+const UserSchema = new Schema({
+    _id: {
+        type: mongoose.Types.ObjectId
+    },
     name: {
         type: String,
         required: true,
@@ -26,7 +30,7 @@ const UserSchema = new Schema<User>({
     }
 });
 
-type Test = InferSchemaType<typeof UserSchema>
+export type User = InferSchemaType<typeof UserSchema>
 
-const User = model<User>('users', UserSchema);
-export default User;
+const UserModel = model('users', UserSchema);
+export default UserModel;

@@ -1,11 +1,14 @@
 import type { Request, Response} from 'express';
 import { Router } from 'express';
+
 const router = Router();
 
-router.get(['/','/rooms/:roomId'],(req: Request, res: Response) => {
+const handler = (req: Request,res: Response) => {
     res.render('index', {
-        script: 'main'
+        script: 'users',
+
     });
-});
+};
+router.get('/login', handler);
 
 export default router;
