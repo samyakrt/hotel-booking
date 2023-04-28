@@ -1,6 +1,7 @@
 import type { InferSchemaType} from 'mongoose';
 import mongoose from 'mongoose';
 import { Schema, model } from 'mongoose';
+import uniqueValidator  from 'mongoose-unique-validator';
 
 const UserSchema = new Schema({
     _id: {
@@ -17,7 +18,7 @@ const UserSchema = new Schema({
     },
     password: {
         type: Buffer,
-        required: [true,'email required']
+        required: [true,'password required']
     },
     createdAt: {
         type: Date,
@@ -30,7 +31,9 @@ const UserSchema = new Schema({
     }
 });
 
+UserSchema.plugin(uniqueValidator);
 export type User = InferSchemaType<typeof UserSchema>
 
 const UserModel = model('users', UserSchema);
+
 export default UserModel;

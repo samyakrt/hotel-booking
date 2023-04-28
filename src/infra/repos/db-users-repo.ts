@@ -1,48 +1,44 @@
 import type { RegisterUserPayload } from '@/schemas/register-user-schema';
-import { BadRequestError, ValidationFailedError } from '@/shared/error';
+import { BadRequestError, ValidationFailedError } from '@/shared/errors';
 import type { SimpleUser, User, UserFilter } from '@/srv/repos/users-repo';
 import type UsersRepo from '@/srv/repos/users-repo';
 import type { Model} from 'mongoose';
+import handleDBError from '../helper';
+import { comparePassword, hashPassword } from '@/shared/encrypt';
 import mongoose from 'mongoose';
+import omit from 'lodash/omit';
 
 class DbUsersRepo implements UsersRepo {
 
     constructor(private user: Model<User>) { }
 
     async registerUser(payload: RegisterUserPayload): Promise<SimpleUser> {
-        const password = Buffer.from(payload.password, 'utf-8');
-        const doc = new this.user({
+        const password = hashPassword(payload.password);
+        const row = await this.user.create({
             email: payload.email,
             name: payload.name,
             password,
-        });
-
-        // const err =  doc.validateSync();
-
-        // console.log(err);
-        // if(err instanceof mongoose.Error.ValidationError) {
-        // }
-        const row = await doc.save();
+            _id: new mongoose.Types.ObjectId()
+        }).catch(handleDBError);
 
         return row;
     }
 
     async validateUser(email: string, password: string): Promise<SimpleUser> {
         const user = await this.user.findOne({
-            email
+            email,
         });
-
         if (!user) {
             throw new BadRequestError('User not found');
         }
 
-        if (user.password.toString() !== password) {
+        if (!comparePassword(password,user.password)) {
             throw new ValidationFailedError('validation failed', {
                 'email': ['invalid credentials']
             });
         }
-
-        return user;
+        const row = user.toJSON();
+        return omit(row,'password');
     }
 
     async fetchUsers(filter: UserFilter): Promise<SimpleUser[]> {

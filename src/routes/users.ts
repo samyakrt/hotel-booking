@@ -4,11 +4,11 @@ import { Router } from 'express';
 const router = Router();
 
 const handler = (req: Request,res: Response) => {
-    res.render('index', {
-        script: 'users',
-
+    res.render('users', {
+        script: 'Users',
     });
 };
-router.get('/login', handler);
+
+router.get(['/register','/login'], handler);
 
 export default router;

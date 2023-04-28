@@ -1,3 +1,4 @@
+import { Error } from '@/common';
 import { classNames } from '@/utils';
 import React from 'react';
 import type { ErrorOption } from 'react-hook-form';
@@ -34,7 +35,7 @@ const FieldGroup: React.FC<React.PropsWithChildren<Props>> = ({ className, child
 {!error && helpText && (
   <div className="mt-2 text-xs text-gray-400">{helpText}</div>
 )}
-{/* {error && <Error className="mt-2" error={error} />} */}
+{error && <Error className="mt-2" error={error} />}
 </div>;
 
 export default FieldGroup;

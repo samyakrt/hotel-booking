@@ -9,7 +9,7 @@ Accept: application/json
 
 {
     "name":"nick",
-    "email" :"nick3@mail.com",
+    "email" :"tuladharsamyak@gmail.com",
     "password":"$Amyak1201"
 }
 
@@ -25,7 +25,6 @@ Content-Type: application/json
 Accept: application/json
 
 {
-    "name":"nick",
-    "email" :"nick3@mail.com",
+    "email" :"tuladharsamyak@gmail.com",
     "password":"$Amyak1201"
 }

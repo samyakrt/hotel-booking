@@ -1,15 +1,22 @@
 import React from 'react';
-import { useForm, FormProvider } from 'react-hook-form';
-import { FieldGroup, Input } from '@/components/inputs';
+import RegisterForm from './RegisterForm';
+import type { HandleSubmit, RegisterUser } from '@/types';
+import { registerUser } from '@/infra';
+import { useHandleError } from '@/hooks';
+import { useNavigate } from 'react-router-dom';
 
-const Register = () => {
+const Register: React.FC = () => {
 
-    const methods = useForm();
-    const { register} = useForm();
+    const handleError = useHandleError();
+    const navigate = useNavigate();
+    const onSubmit: HandleSubmit<RegisterUser> = setError => payload => {
+        registerUser(payload).then(() => navigate('login')).catch(err => handleError(err, setError));
+    };
 
     return (
-        <div className="container">
-
+        <div>
+            <h3 className="font-bold text-center">Sign up</h3>
+            <RegisterForm onSubmit={onSubmit} />
         </div>
     );
 };

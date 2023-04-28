@@ -17,6 +17,7 @@ import passport from 'passport';
 import { Strategy } from 'passport-local';
 import session from 'express-session';
 import type { SimpleUser } from './srv/repos/users-repo';
+import UserRouter  from './routes/users';
 
 const main = async () => {
     const app = express();
@@ -48,6 +49,7 @@ const main = async () => {
     }).catch(err => console.error(err));
 
     const usersRepo = new DbUsersRepo(UserModel);
+
     app.use((req: Request, _, next) => {
         req.env = {
             usersRepo: usersRepo,
@@ -55,10 +57,6 @@ const main = async () => {
         };
         next();
     });
-
-    app.get('/', (req, res) => res.redirect('/app'));
-    app.use('/app', AppRouter);
-    app.use('/api', ApiRouter);
 
     passport.use(new Strategy({
         usernameField: 'email',
@@ -70,13 +68,14 @@ const main = async () => {
         return done(null, user);
     }));
 
-    passport.serializeUser(function (user, done) {
-        done(null, user);
-    });
+    passport.serializeUser((user: Express.User, done) => done(null, user ));
 
-    passport.deserializeUser<SimpleUser>(function (user, done) {
-        done(null, Object.values(user) ? user : null);
-    });
+    passport.deserializeUser<SimpleUser>( (user, done) =>done(null, user));
+
+    app.get('/', (req, res) => res.redirect('/app'));
+    app.use('/app', AppRouter);
+    app.use('/users',UserRouter);
+    app.use('/api', ApiRouter);
 
     app.use(handleError);
 

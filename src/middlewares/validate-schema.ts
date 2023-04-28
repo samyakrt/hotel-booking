@@ -1,4 +1,4 @@
-import { ValidationFailedError } from '@/shared/error';
+import { ValidationFailedError } from '@/shared/errors';
 import type { ExtractedErrorsType } from '@/types/validation';
 import type { NextFunction, Request, Response } from 'express';
 import type { ZodSchema } from 'zod';
