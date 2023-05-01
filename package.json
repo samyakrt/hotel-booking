@@ -27,6 +27,7 @@
   "devDependencies": {
     "@tailwindcss/forms": "^0.5.3",
     "@types/bcrypt": "^5.0.0",
+    "@types/cookie-parser": "^1.4.3",
     "@types/express": "^4.17.14",
     "@types/express-session": "^1.17.7",
     "@types/fs-extra": "^9.0.13",
@@ -54,6 +55,8 @@
     "@types/cors": "^2.8.12",
     "@types/node": "^18.11.9",
     "bcrypt": "^5.1.0",
+    "connect-mongo": "^5.0.0",
+    "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "deep-cleaner": "^2.0.0-alpha.3",
     "dotenv": "^16.0.3",
@@ -70,6 +73,8 @@
     "mongoose-unique-validator": "^4.0.0",
     "passport": "^0.6.0",
     "passport-local": "^1.0.0",
+    "pino-http": "^8.3.3",
+    "pino-http-print": "^3.1.0",
     "tailwindcss": "^3.2.1",
     "zod": "^3.21.4"
   }

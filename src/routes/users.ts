@@ -6,6 +6,7 @@ const router = Router();
 const handler = (req: Request,res: Response) => {
     res.render('users', {
         script: 'Users',
+        isLoggedIn: req.isAuthenticated()
     });
 };
 

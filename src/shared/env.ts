@@ -6,7 +6,7 @@ const env = cleanEnv(process.env,{
         default:'secret'
     }),
     SESSION_AGE: num({
-        default: 24 * 60 * 60 * 1000
+        default: 18000000
     }),
     SESSION_KEY: str({
         default:'password'

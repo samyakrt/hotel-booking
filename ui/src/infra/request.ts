@@ -8,7 +8,8 @@ const request = async <R>(method: Method,url: string, params= {} ) => {
     const res = await axios({
       method,
       url,
-      data:params,
+      data: method.toLowerCase() === 'get' ? {}: params,
+      params: method.toLowerCase() === 'get' ? params: {},
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json'

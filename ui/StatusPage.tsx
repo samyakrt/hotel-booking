@@ -32,7 +32,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if(element) {
         const root = createRoot(element);
         const { statusType, isLoggedIn } = element.dataset;
-        console.log(element.dataset);
 
         root.render(
             <React.StrictMode>

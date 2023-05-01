@@ -6,3 +6,7 @@ export interface RegisterUser {
 }
 
 export type LoginUser = Omit<RegisterUser,'name'>
+
+export interface UserSession {
+    isLoggedIn: boolean
+}

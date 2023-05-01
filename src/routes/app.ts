@@ -4,7 +4,8 @@ const router = Router();
 
 router.get(['/','/rooms/:roomId'],(req: Request, res: Response) => {
     res.render('index', {
-        script: 'main'
+        script: 'main',
+        isLoggedIn: req.isAuthenticated()
     });
 });
 

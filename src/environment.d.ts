@@ -1,6 +1,6 @@
 import type UsersRepo from '@/srv/repos/users-repo';
 import type RoomsRepo from '@/srv/repos/rooms-repo';
-import type { SimpleUser } from '@/srv/repos/users-repo';
+import { SimpleUser } from '@/srv/repos/users-repo';
 
 declare module 'express-serve-static-core' {
     export interface Request {
@@ -13,6 +13,6 @@ declare module 'express-serve-static-core' {
         }
         user: SimpleUser
     }
-    export type User = SimpleUser;
+    User = SimpleUser;
 }
 export  {};

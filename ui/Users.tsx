@@ -6,13 +6,15 @@ import UserLayout from '@/layouts/UserLayout';
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    const element = document.querySelector('#react-root');
+    const element = document.querySelector<HTMLElement>('#react-root');
 
     if (element) {
         const root = createRoot(element);
+        const {isLoggedIn} = element.dataset;
+
         root.render(
             <React.StrictMode>
-                <UserLayout>
+                <UserLayout isLoggedIn={Boolean(isLoggedIn)}>
                     <BrowserRouter basename="/users">
                         <Routes>
                             <Route path="register" element={<Register />} />
