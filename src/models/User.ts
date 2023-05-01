@@ -1,7 +1,12 @@
-import { Schema, model, InferSchemaType } from 'mongoose';
-import { User } from '@/srv/repos/users-repo';
+import type { InferSchemaType} from 'mongoose';
+import mongoose from 'mongoose';
+import { Schema, model } from 'mongoose';
+import uniqueValidator  from 'mongoose-unique-validator';
 
-const UserSchema = new Schema<User>({
+const UserSchema = new Schema({
+    _id: {
+        type: mongoose.Types.ObjectId
+    },
     name: {
         type: String,
         required: true,
@@ -13,7 +18,7 @@ const UserSchema = new Schema<User>({
     },
     password: {
         type: Buffer,
-        required: [true,'email required']
+        required: [true,'password required']
     },
     createdAt: {
         type: Date,
@@ -26,7 +31,9 @@ const UserSchema = new Schema<User>({
     }
 });
 
-type Test = InferSchemaType<typeof UserSchema>
+UserSchema.plugin(uniqueValidator);
+export type User = InferSchemaType<typeof UserSchema>
 
-const User = model<User>('users', UserSchema);
-export default User;
+const UserModel = model('users', UserSchema);
+
+export default UserModel;

@@ -1,4 +1,4 @@
-import { CustomError, ValidationFailedError } from '@/shared/error';
+import { CustomError, ValidationFailedError } from '@/shared/errors';
 import type { ExtractedErrorsType } from '@/types/validation';
 import type { ErrorRequestHandler, NextFunction, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
@@ -10,10 +10,7 @@ interface JsonResponse {
 }
 
 const handleError: ErrorRequestHandler = (err, req: Request, res: Response, next: NextFunction) => {
-
-  if (err instanceof CustomError) {
-    console.log(err);
-  }
+  console.log(err);
 
   const status = err instanceof CustomError ? err.httpStatus : StatusCodes.INTERNAL_SERVER_ERROR;
   res.status(status);
@@ -43,9 +40,6 @@ const handleError: ErrorRequestHandler = (err, req: Request, res: Response, next
   }
 
   res.status(status).json(payload);
-  res.status(500).json({
-    message: 'server error'
-  });
 };
 
 export default handleError;

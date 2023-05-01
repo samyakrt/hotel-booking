@@ -8,7 +8,8 @@ const request = async <R>(method: Method,url: string, params= {} ) => {
     const res = await axios({
       method,
       url,
-      data:params,
+      data: method.toLowerCase() === 'get' ? {}: params,
+      params: method.toLowerCase() === 'get' ? params: {},
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json'
@@ -19,16 +20,33 @@ const request = async <R>(method: Method,url: string, params= {} ) => {
 
   } catch (error) {
     if(error instanceof AxiosError) {
-      throw new ReponseError(error.response?.data,error.response?.data.message);
+
+      if(error.response?.status == 422) {
+      throw new ValidationFailedError(error.response,error.response?.data.message);
+
+      }
+      throw new ResponseError(error.response?.data,error.response?.data.message);
     }
   }
 };
 
-class ReponseError extends Error{
-
+export class ResponseError extends Error{
   constructor(private error: AxiosResponse,message?: string ) {
       super(message);
   }
+}
+
+export class ValidationFailedError extends ResponseError {
+  public errors: ExtractedErrorsType = {};
+
+  constructor(err: AxiosResponse<{errors: ExtractedErrorsType}>, message: string) {
+    super(err,message);
+    this.errors = err.data.errors;
+  }
+}
+
+export interface ExtractedErrorsType {
+  [key: string]: string[];
 }
 
 export default request;

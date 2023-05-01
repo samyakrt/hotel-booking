@@ -1,4 +1,4 @@
-import { ExtractedErrorsType } from '@/types/validation';
+import type { ExtractedErrorsType } from '@/types/validation';
 import HttpStatusCode from 'http-status-codes';
 
 export abstract class CustomError extends Error {
@@ -12,8 +12,9 @@ export abstract class CustomError extends Error {
 
 export class UnexpectedError extends CustomError {
     public static readonly httpStatus = HttpStatusCode.INTERNAL_SERVER_ERROR;
+    public static readonly message = 'Server Error';
 
-    constructor(message: string) {
+    constructor(message =UnexpectedError.message ) {
         super(message,UnexpectedError.httpStatus);
     }
 }

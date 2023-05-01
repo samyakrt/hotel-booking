@@ -1,8 +1,8 @@
 import type { PaginationFilter } from './pagination';
 
 export interface RoomFilter extends PaginationFilter {
-    startDate?: Date,
-    endDate?:Date
+    startDate?: string,
+    endDate?:string
 }
 
 export interface Room {

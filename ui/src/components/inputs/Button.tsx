@@ -24,8 +24,9 @@ const colors: ColorVariation = {
   };
 
 type Sizes = 'xs' | 'sm'| 'base' | 'lg' | 'xl'
+type Ref = HTMLButtonElement
 
-interface Props extends React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
+interface Props extends React.DetailedHTMLProps<React.ButtonHTMLAttributes<Ref>, Ref> {
     className?: string
     type?: 'button'| 'submit',
     color?: Colors,
@@ -33,9 +34,7 @@ interface Props extends React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLB
     children?: React.ReactNode;
 }
 
-type Ref = HTMLButtonElement
-
-const Button = ({ children, type = 'button',color = 'clear', size = 'base' ,  className,...props }: Props, ref: React.LegacyRef<HTMLButtonElement> | undefined) => (
+const Button = ({ children, type = 'button',color = 'clear', size = 'base' ,  className,...props }: Props, ref: React.LegacyRef<Ref> | undefined) => (
         <button ref={ref} type={type} className={classNames(className,colors[color],sizes[size],'rounded')} {...props} >
             {children}
         </button>

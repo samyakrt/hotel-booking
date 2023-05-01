@@ -1,3 +1,30 @@
 @baseUrl = http://localhost:3000/api
 
 GET {{baseUrl}}/rooms?skip=3
+
+###
+POST {{baseUrl}}/users/register
+Content-Type: application/json
+Accept: application/json
+
+{
+    "name":"nick",
+    "email" :"tuladharsamyak@gmail.com",
+    "password":"$Amyak1201"
+}
+
+###
+GET {{baseUrl}}/users
+Content-Type: application/json
+Accept: application/json
+
+###
+
+POST {{baseUrl}}/users/login
+Content-Type: application/json
+Accept: application/json
+
+{
+    "email" :"tuladharsamyak@gmail.com",
+    "password":"$Amyak1201"
+}

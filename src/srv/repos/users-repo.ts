@@ -1,17 +1,16 @@
+import type { User as UserModel } from '@/models/User';
+import type { RegisterUserPayload } from '@/schemas/register-user-schema';
+
 interface UsersRepo {
-    fetchUsers(filter: UserFilter):Promise<User[]>;
+    fetchUsers(filter: UserFilter):Promise<SimpleUser[]>;
+    validateUser(email:string,password: string): Promise<SimpleUser>;
+    registerUser(payload: RegisterUserPayload): Promise<SimpleUser>
 }
 
 export default UsersRepo;
 
-export interface User {
-    _id: string
-    name: string
-    email: string
-    password: Buffer,
-    createdAt: Date
-    updatedAt: Date
-}
+export type User = UserModel
+export type SimpleUser = Omit<User,'password'>
 
 export interface UserFilter {
     _id?: string;

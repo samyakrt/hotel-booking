@@ -1,27 +1,26 @@
-import { Rooms, SearchBar } from '@/components/rooms';
+import React, { useEffect, useState } from 'react';
 import { fetchRooms } from '@/infra';
 import { Room} from '@/types';
 import type { Pagination, RoomFilter } from '@/types';
-import React, { useEffect, useState } from 'react';
+import type { SubmitHandler} from 'react-hook-form';
 import {  FormProvider, useForm } from 'react-hook-form';
+import SearchBar from './SearchBar';
+import Rooms from './Rooms';
 
 const Room = () => {
 
-    const methods = useForm<RoomFilter>({
-        values: {
-            startDate: undefined,
-            endDate: undefined
-        }
-    });
+    const methods = useForm<RoomFilter>({});
 
     const [rooms,setRooms] = useState<Pagination<Room>>();
-
-    const fields = methods.watch();
 
     useEffect(() => {
         fetchRooms(methods.getValues())
         .then(setRooms);
-    },[fields]);
+    },[]);
+
+    const onSubmit: SubmitHandler<RoomFilter> = payload => {
+        fetchRooms(payload).then(setRooms);
+    };
 
     if(!rooms) {
         return null;
@@ -31,8 +30,8 @@ const Room = () => {
         <div>
             <FormProvider {...methods}>
                 <div className="flex justify-center content-center items-center flex-col">
-                    <div className="m-4 ">
-                    <SearchBar />
+                    <div className="m-4">
+                    <SearchBar onSubmit={onSubmit} />
                     </div>
                 <Rooms rooms={rooms.data} />
                 </div>

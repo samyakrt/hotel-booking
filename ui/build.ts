@@ -13,7 +13,8 @@ const watch = Boolean(args.watch);
             outdir: path.join('..', isProd ? 'dist' : 'src', 'public', 'js'),
             entryPoints: [
                 path.join('./', 'main.tsx'),
-                path.join('./', 'StatusPage.tsx')
+                path.join('./', 'StatusPage.tsx'),
+                path.join('./','Users.tsx')
             ],
             plugins: [
                 esBuildTsc({
