@@ -8,5 +8,7 @@ interface RoomsRepo {
 export default RoomsRepo;
 
 export interface RoomFilter extends PaginationFilter {
-    _id?: string
+    _id?: string,
+    startDate?: string
+    endDate?: string
 }

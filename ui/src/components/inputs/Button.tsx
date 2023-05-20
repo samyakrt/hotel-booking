@@ -8,7 +8,7 @@ interface ColorVariation {
 }
 
 const colors: ColorVariation = {
-    'primary': 'text-white bg-blue-500 hover:bg-blue-600 focus:ring-blue-600 font-medium shadow-sm border border-transparent',
+    'primary': 'text-white bg-blue-500 hover:bg-blue-600 focus:ring-blue-600 font-medium shadow-sm border border-transparent disabled:opacity-50',
     'secondary': 'bg-gray-200 text-gray-500 hover:bg-gray-300 focus:ring-gray-300 font-medium shadow-sm border border-transparent',
     'alternate': 'text-white bg-blue-600 hover:bg-blue-800 focus:ring-blue-600 font-medium shadow-sm border border-transparent',
     'light': 'text-blue-500 bg-blue-100 hover:bg-blue-200 focus:ring-blue-500 font-medium shadow-sm border border-transparent',

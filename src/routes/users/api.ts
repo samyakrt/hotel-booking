@@ -8,8 +8,7 @@ import passport from 'passport';
 const router = Router();
 
 router.get('/',fetchUsers);
-
-router.post('/login',passport.authenticate('local'));
+router.post('/login',passport.authenticate('session'));
 
 router.post('/register',validateSchema(RegisterUserSchema), registerUser);
 

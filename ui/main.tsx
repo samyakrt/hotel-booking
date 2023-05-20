@@ -8,9 +8,10 @@ document.addEventListener('DOMContentLoaded', () => {
     if (element) {
         const root = createRoot(element);
         const { isLoggedIn } = element.dataset;
+
         root.render(
             <React.StrictMode>
-                <App isLoggedIn={Boolean(isLoggedIn)} />
+                <App isLoggedIn={isLoggedIn === 'true'} />
             </React.StrictMode>
         );
     }

@@ -10,10 +10,10 @@ import env from '@/shared/env';
 import mongoose from 'mongoose';
 import handleError from '@/middlewares/handle-error';
 import DbUsersRepo from '@/infra/repos/db-users-repo';
-import { Room, UserModel } from '@/models';
+import { BookingModel, Room, UserModel } from '@/models';
 import DbRoomsRepo from './infra/repos/db-rooms-repo';
 import ApiRouter from '@/routes/api';
-import passport from 'passport';
+import passport, { use } from 'passport';
 import { Strategy } from 'passport-local';
 import session from 'express-session';
 import type { SimpleUser } from './srv/repos/users-repo';
@@ -21,6 +21,8 @@ import UserRouter from './routes/users';
 import PinoHttp from 'pino-http';
 import cookieParser from 'cookie-parser';
 import connectMongo from 'connect-mongo';
+import DbBookingRepo from './infra/repos/db-booking-repo';
+import Attachments from './shared/attachments';
 
 const main = async () => {
     const app = express();
@@ -58,8 +60,10 @@ const main = async () => {
     app.use((req: Request, _, next) => {
         req.env = {
             usersRepo: usersRepo,
-            roomsRepo: new DbRoomsRepo(Room)
+            roomsRepo: new DbRoomsRepo(Room),
+            bookingRepo: new DbBookingRepo(BookingModel)
         };
+        req.attachments = new Attachments();
         next();
     });
 
@@ -81,19 +85,21 @@ const main = async () => {
 
     passport.use(new Strategy({
         usernameField: 'email',
-    }, async (email: string, password: string, done) => {
+    }, async (email: string, password: string, done) => process.nextTick(async () => {
         const user = await usersRepo.validateUser(email, password).catch(err => done(err, false));
 
-        if (!user) return done(null, false);
+        if (!user)  {
+            return done('user not found', false);
+        }
 
         return done(null, user);
-    }));
+    }) ) );
 
-    passport.serializeUser((user: Express.User, done) => process.nextTick(() => {
+    passport.serializeUser((user: Express.User, done) => {
         done(null, (user as SimpleUser)._id);
-    }));
+    });
 
-    passport.deserializeUser<string>(  (_id, done) =>  process.nextTick(async() => {
+    passport.deserializeUser<string>((_id, done) =>  process.nextTick(async() => {
 
         if (_id) {
             const [user] = await usersRepo.fetchUsers({
@@ -105,18 +111,12 @@ const main = async () => {
     }));
     /*----------------------------END --------------------------------------------------- */
 
+    app.get('/', (req,res) => res.redirect('/app'));
     app.use('/app', passport.authenticate('session'),AppRouter);
-    app.use('/users', passport.authenticate('session'), UserRouter);
-    app.use('/api', passport.authenticate('session'),ApiRouter);
+    app.use('/users',  UserRouter);
+    app.use('/api',ApiRouter);
 
     app.use(handleError);
-
-    app.use((req, res) => res.render('statuspage', {
-        script: 'StatusPage',
-        statusType: 'notfound',
-        isLoggedIn: Boolean(req.isAuthenticated)
-    })
-    );
     return app;
 };
 

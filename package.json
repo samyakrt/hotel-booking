@@ -58,6 +58,7 @@
     "connect-mongo": "^5.0.0",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
+    "dayjs": "^1.11.7",
     "deep-cleaner": "^2.0.0-alpha.3",
     "dotenv": "^16.0.3",
     "envalid": "^7.3.1",

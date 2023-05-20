@@ -1,22 +1,26 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Datepicker from 'react-tailwindcss-datepicker';
 import type { DateValueType } from 'react-tailwindcss-datepicker/dist/types';
 import { produce } from 'immer';
 import { Button } from '@/components/inputs';
-import type { SubmitHandler} from 'react-hook-form';
 import { useFormContext } from 'react-hook-form';
-import type { RoomFilter } from '@/types';
+import type { Pagination, Room, RoomFilter } from '@/types';
+import { fetchRooms } from '@/infra';
 
 interface Props {
-    onSubmit: SubmitHandler<RoomFilter>
+    setRoom: React.Dispatch<React.SetStateAction<Pagination<Room>>>
 }
-const SearchBar: React.FC<Props> = ({ onSubmit }) => {
+const SearchBar: React.FC<Props> = ({ setRoom }) => {
     const [ranges, setRange] =  useState<DateValueType>({
         startDate:null,
         endDate: null
     });
+    const { setValue, watch } = useFormContext<RoomFilter>();
+    const fields = watch();
 
-    const { setValue, handleSubmit } = useFormContext<RoomFilter>();
+    useEffect(() => {
+        fetchRooms(fields).then((data) => setRoom(data as Pagination<Room>));
+    },[fields]);
 
     const onChange = (value : DateValueType) => {
         const next = produce(ranges, draft => {
@@ -41,7 +45,7 @@ const SearchBar: React.FC<Props> = ({ onSubmit }) => {
     };
 
     return (
-        <form className="p-4 border" onSubmit={handleSubmit(onSubmit)}>
+        <form className="p-4 border">
         <h2 className="text-center mb-3 text-lg font-bold text-gray-600">Search your perfect hotel</h2>
             <div className="flex items-center justify-between gap-3">
 

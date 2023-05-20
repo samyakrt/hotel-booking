@@ -1,4 +1,5 @@
-import type { InferSchemaType } from 'mongoose';
+import type { InferSchemaType} from 'mongoose';
+import { Types } from 'mongoose';
 import { model, Schema, SchemaTypes } from 'mongoose';
 
 const CurrentBookingSchema = new Schema({
@@ -8,6 +9,7 @@ const CurrentBookingSchema = new Schema({
 });
 
 const RoomSchema = new Schema({
+    _id: Types.ObjectId,
     name: {
         type: String,
         required: true

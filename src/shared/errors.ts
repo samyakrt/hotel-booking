@@ -30,7 +30,7 @@ export class BadRequestError extends CustomError {
 
 export class UnauthorizedError extends CustomError {
     public static readonly httpStatus = HttpStatusCode.UNAUTHORIZED;
-    public static readonly message = 'Bad Request';
+    public static readonly message = 'Unauthorized';
 
     constructor(message = UnauthorizedError.message) {
         super(message,UnauthorizedError.httpStatus);
@@ -40,6 +40,15 @@ export class UnauthorizedError extends CustomError {
 export class ForbiddenError extends CustomError {
     public static readonly httpStatus = HttpStatusCode.FORBIDDEN;
     public static readonly message = 'Bad Request';
+
+    constructor(message = ForbiddenError.message ) {
+        super(message,ForbiddenError.httpStatus);
+    }
+}
+
+export class NotFoundError extends CustomError {
+    public static readonly httpStatus = HttpStatusCode.NOT_FOUND;
+    public static readonly message = 'Not Found';
 
     constructor(message = ForbiddenError.message ) {
         super(message,ForbiddenError.httpStatus);

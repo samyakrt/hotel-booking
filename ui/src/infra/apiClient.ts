@@ -1,4 +1,4 @@
-import type { LoginUser, Pagination, RegisterUser, Room, RoomFilter } from '@/types';
+import type { CreateBookingPayload, LoginUser, Pagination, RegisterUser, Room, RoomFilter } from '@/types';
 import request from './request';
 
 const BASE_URL = '/api';
@@ -11,3 +11,4 @@ export const registerUser = (payload: RegisterUser) => request('POST',`${BASE_UR
 
 export const loginUser = (payload: LoginUser) => request('POST',`${BASE_URL}/users/login`,payload);
 
+export const addNewBooking = (roomId: string,payload: CreateBookingPayload) => request('post',`${BASE_URL}/booking/${roomId}/new`, payload);
